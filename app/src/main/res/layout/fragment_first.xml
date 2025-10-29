@@ -1,24 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:padding="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/textview_first"
+        <!-- Producto -->
+        <EditText
+            android:id="@+id/etProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Producto"
+            android:inputType="text" />
+
+        <!-- Precio -->
+        <EditText
+            android:id="@+id/etPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio"
+            android:inputType="numberDecimal" />
+
+        <!-- Cantidad -->
+        <EditText
+            android:id="@+id/etCantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cantidad"
+            android:inputType="number" />
+
+        <!-- Botón para calcular -->
+        <Button
+            android:id="@+id/btnCalcular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            android:text="Calcular"
+            android:layout_marginTop="16dp" />
+
+        <!-- Resultados -->
+        <TextView
+            android:id="@+id/tvIva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IVA: "
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: " />
+
+        <TextView
+            android:id="@+id/tvDescuento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descuento: " />
+
+        <TextView
+            android:id="@+id/tvTotalPagar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total a pagar: " />
+
+    </LinearLayout>
+</ScrollView>
