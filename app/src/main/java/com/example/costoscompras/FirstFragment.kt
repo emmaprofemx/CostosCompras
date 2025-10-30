@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.costoscompras.databinding.FragmentFirstBinding
 import java.text.DecimalFormat
 
@@ -17,6 +18,17 @@ class FirstFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val formato = DecimalFormat("#,##0.00")
+
+    private val listaProductos = mutableListOf(
+        Producto("Laptop", 16000.0),
+        Producto("Monitor", 4500.0),
+        Producto("Teclado", 700.0),
+        Producto("Mouse", 350.0),
+        Producto("Disco SSD 1TB", 2800.0),
+        Producto("Gabinete RGB", 1500.0)
+    )
+
+    private lateinit var adapter: ProductoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,70 +41,24 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnAgregarProducto.setOnClickListener {
-            agregarProducto()
+        adapter = ProductoAdapter(listaProductos) {
+            calcularTotales()
         }
 
-        binding.btnCalcular.setOnClickListener {
-            calcularTotal()
-        }
+        binding.recyclerProductos.adapter = adapter
+        binding.recyclerProductos.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun agregarProducto() {
-        val contexto = requireContext()
-        val productoLayout = LinearLayout(contexto).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(0, 16, 0, 16)
-        }
-
-        val etNombre = EditText(contexto).apply {
-            hint = "Producto"
-        }
-
-        val etPrecio = EditText(contexto).apply {
-            hint = "Precio"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-        }
-
-        val etCantidad = EditText(contexto).apply {
-            hint = "Cantidad"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER
-        }
-
-        productoLayout.addView(etNombre)
-        productoLayout.addView(etPrecio)
-        productoLayout.addView(etCantidad)
-
-        binding.productListContainer.addView(productoLayout)
-    }
-
-    private fun calcularTotal() {
-        var subtotal = 0.0
-
-        for (i in 0 until binding.productListContainer.childCount) {
-            val productoView = binding.productListContainer.getChildAt(i) as LinearLayout
-
-            val etNombre = productoView.getChildAt(0) as EditText
-            val etPrecio = productoView.getChildAt(1) as EditText
-            val etCantidad = productoView.getChildAt(2) as EditText
-
-            val precio = etPrecio.text.toString().toDoubleOrNull()
-            val cantidad = etCantidad.text.toString().toIntOrNull()
-
-            if (precio == null || cantidad == null) {
-                Toast.makeText(requireContext(), "Revisa los campos del producto ${i + 1}", Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            subtotal += precio * cantidad
-        }
-
+    private fun calcularTotales() {
+        val subtotal = listaProductos.sumOf { it.precio * it.cantidad }
         val iva = subtotal * 0.16
-        val total = subtotal + iva
+        val descuento = if (subtotal >= 3000.0) subtotal * 0.10 else 0.0
+        val total = subtotal + iva - descuento
 
         binding.tvSubtotal.text = "Subtotal: \$${formato.format(subtotal)}"
-        binding.tvIva.text = "IVA: \$${formato.format(iva)}"
-        binding.tvTotalPagar.text = "Total a pagar: \$${formato.format(total)}"
+        binding.tvIva.text = "IVA (16%): \$${formato.format(iva)}"
+        binding.tvDescuento.text = "Descuento: \$${formato.format(descuento)}"
+        binding.tvTotal.text = "Total a pagar: \$${formato.format(total)}"
     }
 
     override fun onDestroyView() {
@@ -100,3 +66,4 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 }
+
