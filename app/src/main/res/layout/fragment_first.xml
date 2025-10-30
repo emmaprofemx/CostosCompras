@@ -5,62 +5,46 @@
     android:padding="16dp">
 
     <LinearLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
-        <!-- Producto -->
-        <EditText
-            android:id="@+id/etProducto"
+        <!-- Botón para agregar producto -->
+        <Button
+            android:id="@+id/btnAgregarProducto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Producto"
-            android:inputType="text" />
+            android:text="Agregar Producto" />
 
-        <!-- Precio -->
-        <EditText
-            android:id="@+id/etPrecio"
+        <!-- Contenedor dinámico de productos -->
+        <LinearLayout
+            android:id="@+id/productListContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Precio"
-            android:inputType="numberDecimal" />
-
-        <!-- Cantidad -->
-        <EditText
-            android:id="@+id/etCantidad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cantidad"
-            android:inputType="number" />
+            android:orientation="vertical"
+            android:layout_marginTop="16dp" />
 
         <!-- Botón para calcular -->
         <Button
             android:id="@+id/btnCalcular"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Calcular"
+            android:text="Calcular Total"
             android:layout_marginTop="16dp" />
 
         <!-- Resultados -->
         <TextView
+            android:id="@+id/tvSubtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtotal: " />
+
+        <TextView
             android:id="@+id/tvIva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IVA: "
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total: " />
-
-        <TextView
-            android:id="@+id/tvDescuento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descuento: " />
+            android:text="IVA: " />
 
         <TextView
             android:id="@+id/tvTotalPagar"
